@@ -159,10 +159,11 @@
 - threadPoolSize，属性告诉TestNG创建一个线程池以通过多个线程运行测试方法。 使用线程池，会大大降低测试方法的运行时间  
 
 ## 2 TestNG 与 Selenium
-<p>[Selenium 教程](https://www.yiibai.com/selenium/)</p>
-<p>[testNG 教程](www.yiibai.com/testng/)</p>
-<p>http://gitbook.net/selenium/</p>
-<p>按照以下步骤可实现简单的Selenium测试</p>
+- [Selenium 教程](https://www.yiibai.com/selenium/)
+- [testNG 教程](www.yiibai.com/testng/)
+- http://gitbook.net/selenium/
+
+按照以下步骤可实现简单的Selenium测试
 
 ## 2.1 pom.xml添加依赖
 ```xml
