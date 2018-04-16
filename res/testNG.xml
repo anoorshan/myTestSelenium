@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "Suite1">
+    <parameter name="browser" value="chrome" />
+    <test name="testChrome" enabled="false" >
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="testCase.SeleniumByBrowsers"/>
+        </classes>
+    </test>
+    <test name="testFirefox" >
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="testCase.SeleniumByBrowsers"/>
+        </classes>
+    </test>
+    <test name="testGithub" >
+        <parameter name = "userName" value="anoorshan"/>
+        <parameter name="password" value="anoor881128"/>
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="testCase.TestGithub"/>
+        </classes>
+    </test>
+    <test name="test163" >
+        <classes>
+            <class name="testCase.TestMail163SignUp"/>
+        </classes>
+    </test>
+</suite>
