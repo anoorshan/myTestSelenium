@@ -110,9 +110,9 @@
   }
   ```
 
-### 1.3.2 忽略
+#### 1.3.2 忽略
 如果使用`@Test(enabled = false)`注释在测试方法上，则会绕过这个未准备好测试的测试用例。
-### 1.3.3 依赖
+#### 1.3.3 依赖
 在需要以特定顺序调用测试用例中的方法，为方法添加依赖，TestNG允许指定依赖关系：
 
   - 在@Test注释中使用属性dependsOnMethods，`@Test(dependsOnMethods = { "method1" })`
@@ -121,7 +121,7 @@
   - 二者可以单独使用，也可以混合使用，例如`@Test(dependsOnMethods = { "initDB" }, groups="db")`
   - 当测试所依赖的方法或者组失败时，测试则跳过不执行
 
-### 1.3.4 分组
+#### 1.3.4 分组
 &emsp;&emsp;分组测试是TestNG中的一个新的创新功能，它在JUnit框架中是不存在的。 它允许您将方法调度到适当的部分，并执行复杂的测试方法分组。组测试提供了如何分区测试的最大灵活性，如果您想要背靠背运行两组不同的测试，则不需要重新编译任何内容。
 
 &emsp;&emsp;使用`<groups>`标记在testng.xml文件中指定分组。 它可以在`<test>`或`<suite>`标签下找到。 `<suite>`标签中指定分组适用于其下的所有`<test>`标签。
@@ -149,11 +149,11 @@
     </test>
 ```
 
-### 1.3.5 预期异常
+#### 1.3.5 预期异常
 使用`@Test(expectedExceptions = )`，例如`@Test(expectedExceptions = ArithmeticException.class)`可测试运行时异常，如除0
-### 1.3.6 超时
+#### 1.3.6 超时
 使用 `@Test(timeOut = 5000) // time in mulliseconds`设置超时,“超时”表示如果单元测试花费的时间超过指定的毫秒数，那么TestNG将会中止它并将其标记为失败。
-### 1.3.7 负载测试
+#### 1.3.7 负载测试
 使用`@Test(invocationCount = ?, threadPoolSize = ?)`，定义测试次数和线程。
 - invocationCount，确定TestNG应该运行这个测试方法的次数
 - threadPoolSize，属性告诉TestNG创建一个线程池以通过多个线程运行测试方法。 使用线程池，会大大降低测试方法的运行时间  
@@ -165,7 +165,7 @@
 
 按照以下步骤可实现简单的Selenium测试
 
-## 2.1 pom.xml添加依赖
+### 2.1 pom.xml添加依赖
 ```xml
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
@@ -175,13 +175,13 @@
         </dependency>
 ```
 
-##  2.2 webdriver配置
+###  2.2 webdriver配置
 确定浏览器的安装路径以及相关驱动(webdriver)的路径
     - [chromedriver 下载](https://sites.google.com/a/chromium.org/chromedriver/downloads)
     - [firefox driver下载](https://github.com/mozilla/geckodriver/releases)
     - [IE driver下载](http://selenium-release.storage.googleapis.com/index.html)
 
-## 2.3 java 代码
+### 2.3 java 代码
 ```
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -200,7 +200,7 @@ public class seleniumByChrome {
         }
     }
 ```
-## 2.4 知识点
+### 2.4 知识点
 - selenium 获取元素的方法（8种）
 - WebDriver
 - WebElement
@@ -217,7 +217,7 @@ public class seleniumByChrome {
   - 捕捉屏幕截图
   - 捕捉视频
 
-### 2.4.1 selenium 获取元素的方法
+#### 2.4.1 selenium 获取元素的方法
 
 | Method	    | Syntax	|  描述 |
 | :---        | :---    | :---  |        
@@ -232,7 +232,7 @@ public class seleniumByChrome {
 
 说明：xpath的获取方法：浏览器打开开发者工具，选择元素，然后再元素的html代码标签上点击右键，选择“copy”-“copy xpath”
 
-### 2.4.2 WebDriver
+#### 2.4.2 WebDriver
 
 | 方法 | 参数 | 描述 |
 | ---- | :----: | :----: |
@@ -251,15 +251,15 @@ public class seleniumByChrome {
 | driver.getCurrentUrl() | | 获取当前路径|
 
 
-### 2.4.3 WebElement
-#### 2.4.3.1 元素交互
+#### 2.4.3 WebElement
+##### 2.4.3.1 元素交互
 - 文本元素(span,b):`getText()`
 - **input[type=‘text’]**：`SendKeys("1234")`设置值， `getattribute("value")`获取文本框的值
 - **radio：**`click`切换选择项，`isSelected()`获取元素是否被选中
 - **checkbox:** `click`切换选择项，`isSelected()` 获取元素是否被选中
 - **select:**`selectByVisibleText`或`selectByIndex`或`selectByValue`的方法选择一个选项,`isSelected`获取元素是否被选中
 
-#### 2.4.3.2 动作交互
+##### 2.4.3.2 动作交互
 - 拖拽
 ```java
 WebElement From = driver.findElement(By.xpath(".//*[@id='j3_7']/a"));
@@ -290,7 +290,13 @@ WebElement From = driver.findElement(By.xpath(".//*[@id='j3_7']/a"));
 
   -  `mouseUp `：释放鼠标通常伴随着鼠标按下的动作和行为的基础上统筹。
 
-### 2.4.4 Synchronization 同步
+#### 2.4.4 Synchronization 同步
+##### 2.4.4.1 THREAD.SLEEP
+
+`Thread.sleep`代码是一个静态的等待
+```java
+Thread.Sleep(1000); //Will wait for 1 second.
+````
 
 ##### 2.4.4.2  显式等待
 一个明确的等待，等待某个条件进一步处理之前发生。它主要用于当我们想要点击或采取行动的对象，一旦它是可见的。
@@ -299,7 +305,7 @@ WebDriver driver = new FirefoxDriver();
 driver.get("Enter an URL"S);
 WebElement DynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("DynamicElement")));
 ```
-#### 2.4.4.3  隐式等待
+##### 2.4.4.3  隐式等待
 隐式等待的情况下，如果网络驱动器找不到，因为它的不可用性的立即的对象。webdriver将等待指定的隐含的等待时间，也不会尝试在指定时间内找到的元素了。一旦指定的时间限制被超越，webdriver将尝试再次搜索该元素的最后一面。如果成功，将继续进行执行，但如果失败，它会抛出异常。这是一种全局的等待，这意味着这种等待是适用于整个驱动程序。因此，硬编码这种等待更长的时间时期将阻碍该脚本执行时间。
 ```java
 WebDriver driver = new FirefoxDriver();
@@ -308,7 +314,7 @@ driver.get("Enter an URL");
 WebElement DynamicElement = driver.findElement(By.id("DynamicElement"));
 ```
 
-#### 2.4.4.4  流利等待
+##### 2.4.4.4  流利等待
 FluentWait用于当webelement可以出现在5秒或者甚至它可以采取90秒。在这种情况下，我们定义的时间等待的状态的最大数量，以及与该查询的对象状态的是否存在等的频率。
 
 让我们假定，我们将60秒可用一个元素在网页上，但每10秒检查一次它的存在。
@@ -327,7 +333,7 @@ WebElement dynamicelement = wait.until(new Function<webdriver,webElement>()
 );
 ```
 
-### 2.4.5 Selenium页面对象模型（POM）
+#### 2.4.5 Selenium页面对象模型（POM）
 思路：
 
 每一个页面对应一个页面类，页面的元素写到这个页面类中。- 页面类主要包括该页面的元素定位，和这些元素相关的业务操作代码封装的方法。把页面元素和业务逻辑和测试脚本分离出来到两个不同类文件。ClassA只写页面元素定位，和业务逻辑代码操作的封装，ClassB只写测试脚本，不关心如何元素定位，只写调用ClassA的代码去覆盖不同的测试场景。如果前端页面发生变化，只需要修改ClassA的元素定位，而不需要去修改ClassB中的测试脚本代码。
@@ -340,7 +346,7 @@ WebElement dynamicelement = wait.until(new Function<webdriver,webElement>()
 - 层次清晰，同时支持多个编写自动化脚本开发，例如每个人写哪几个页面，不影响他人。
 - 建议页面类和业务逻辑方法都给一个有意义的名称，方便他人快速编写脚本和维护脚本。
 
-### 2.4.6 excel参数化
-### 2.4.7 测试快照
+#### 2.4.6 excel参数化
+#### 2.4.7 测试快照
   - 捕捉屏幕截图
   - 捕捉视频
