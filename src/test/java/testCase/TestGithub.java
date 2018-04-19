@@ -35,7 +35,7 @@ public class TestGithub extends TestWebsite {
     @Test(dependsOnMethods = "goYourFilePage")
     public void viewRepositories(){
         //查看仓库
-       // driver.findElement(By.cssSelector("nav.UnderlineNav-body>a:nth-child(2)")).click();
+        driver.findElement(By.cssSelector("nav.UnderlineNav-body>a:nth-child(2)")).click();
     }
     @Test(dependsOnMethods = "viewRepositories")
     public void signOut(){

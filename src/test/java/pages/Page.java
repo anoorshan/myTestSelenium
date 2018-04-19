@@ -1,9 +1,12 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import testCase.WaitUtil;
 
 import java.util.List;
 
@@ -20,11 +23,25 @@ public abstract class Page {
     public WebElement getElementById(String eleId){
         return this.driver.findElement(By.id(eleId));
     }
+    public WebElement getElementById(String eleId,long timeOutInSeconds){
+        By by = By.id(eleId);
+        if (!(WaitUtil.waitElementToBeDisplayed(driver,by, timeOutInSeconds))) {
+            return null;
+        }
+        return this.driver.findElement(by);
+    }
     public WebElement getElementByXpath(String xPath){
         return this.driver.findElement(By.xpath(xPath));
     }
     public WebElement getElementByCss(String cssExp){
         return this.driver.findElement(By.cssSelector(cssExp));
+    }
+    public WebElement getElementByCss(String cssExp,long timeOutInSeconds){
+        By by = By.cssSelector(cssExp);
+        if (!(WaitUtil.waitElementToBeDisplayed(driver,by, timeOutInSeconds))) {
+            return null;
+        }
+        return this.driver.findElement(by);
     }
     public WebElement getElementByName(String name){
         return  this.driver.findElement(By.name(name));
@@ -38,7 +55,6 @@ public abstract class Page {
     public List<WebElement> getElementsByCss(String cssExp){
         return this.driver.findElements(By.cssSelector(cssExp));
     }
-
     public WebElement getElement(String exp, SelectorType type ){
        switch (type){
            case ID:
@@ -110,4 +126,65 @@ public abstract class Page {
             return false;
         }
     }
+    /**
+     * 每隔一秒check一下页面加载是否完成，check次数是25
+     */
+    public void checkPageIsReady() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        for (int i = 0; i < 25; i++) {
+            if ("complete".equals(js.executeScript("return document.readyState").toString())) {
+                break;
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //静态等待
+    public void sleep(long millis){
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    /*鼠标事件交互封装*/
+    // 单击
+    public void click(By by,long timeOutInSeconds){
+        WebElement element = WaitUtil.waitWebElement(driver,by,timeOutInSeconds);
+        WaitUtil.waitElementToBeClickable(driver,by,timeOutInSeconds);
+        new Actions(driver).click(element).perform();
+
+    }
+    public void click(WebElement element){
+        new Actions(driver).click(element).perform();
+
+    }
+    // 双击
+    public void dbClick(WebElement element){
+        new Actions(driver).doubleClick(element).perform();
+
+    }
+    // 悬停 到更多按钮实现
+    public void hover(WebElement element){
+        new Actions(driver).moveToElement(element).perform();
+
+    }
+     // 右击
+    public void contextClick(WebElement element){
+        new Actions(driver).contextClick(element).perform();
+
+    }
+    // 拖动
+    public void drag(WebElement begin,WebElement end){
+        new Actions(driver).dragAndDrop(begin, end).perform();
+    }
+    // 拖动
+    public void drag(WebElement element,int xOffset, int yOffset){
+        new Actions(driver).dragAndDropBy(element,xOffset,yOffset).perform();
+    }
+
+
 }
